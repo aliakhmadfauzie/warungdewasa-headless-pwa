@@ -1,0 +1,18 @@
+{
+  "name": "Warung Dewasa Abang Dugem",
+  "short_name": "Warung Dewasa",
+  "description": "Official Store Warung Dewasa Abang Dugem - Katalog Headless E-Commerce PWA & Layanan COD Area Medan",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0B0F19",
+  "theme_color": "#059669",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

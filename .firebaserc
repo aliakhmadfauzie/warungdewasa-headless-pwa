@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "saltdistribute-2026"
+  },
+  "targets": {
+    "saltdistribute-2026": {
+      "hosting": {
+        "warungdewasa": [
+          "warungdewasa"
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="id" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+    <meta name="theme-color" content="#006C4C" />
+    <meta name="description" content="Katalog Headless E-Commerce Resmi Warung Dewasa Abang Dugem. Dapatkan produk original terverifikasi dengan pengiriman instan COD Area Medan dan direct checkout Shopee & Tokopedia." />
+    <meta name="keywords" content="warung dewasa, abang dugem, warung dewasa medan, ecommerce pwa, headless ecommerce, COD Medan, distributor resmi, belanja online medan" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Warung Dewasa Abang Dugem - Official Store" />
+    <meta property="og:description" content="Katalog resmi Warung Dewasa Abang Dugem dengan deep linking Shopee, Tokopedia, dan layanan pengiriman instan COD Area Medan." />
+    <meta property="og:image" content="/favicon.svg" />
+    <meta property="og:url" content="https://warungdewasa.web.app" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Warung Dewasa Abang Dugem - Official Store" />
+    <meta name="twitter:description" content="Katalog resmi Warung Dewasa Abang Dugem dengan deep linking Shopee, Tokopedia, dan layanan pengiriman instan COD Area Medan." />
+    <meta name="twitter:image" content="/favicon.svg" />
+
+    <!-- Manifest & PWA -->
+    <link rel="manifest" href="/manifest.json" />
+
+    <!-- Performance: Non-blocking font loading (eliminates render-blocking penalty) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- DNS Prefetch for external data sources -->
+    <link rel="dns-prefetch" href="https://poppers.id" />
+    <link rel="dns-prefetch" href="https://supabase.co" />
+    <!-- Prevent dark mode FOUC -->
+    <meta name="color-scheme" content="dark light" />
+    <!-- LCP Preload: First hero image — browser starts fetching before JS parses -->
+    <link
+      rel="preload"
+      as="image"
+      href="https://poppers.id/wp-content/uploads/2025/11/POPPERS.ID-PRODUK-SEXTOYS-104-768x768.jpg"
+      fetchpriority="high"
+    />
+    <!-- Non-blocking font load: preload → onload swap (standard FOUT elimination) -->
+    <link
+      rel="preload"
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Outfit:wght@500;600;700;800;900&display=swap"
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+    <noscript>
+      <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet" />
+    </noscript>
+
+    <title>Warung Dewasa Abang Dugem - Official Store</title>
+
+    <!-- Schema.org JSON-LD Structured Data for Rich Search Results -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "OnlineStore",
+      "name": "Warung Dewasa Abang Dugem Official Store",
+      "description": "Headless E-Commerce PWA Catalog with instant COD Medan delivery and marketplace direct checkout",
+      "url": "https://warungdewasa.web.app",
+      "priceRange": "Rp 25.000 - Rp 350.000",
+      "paymentAccepted": "Cash, Credit Card, QRIS, Bank Transfer, GoPay, ShopeePay, OVO, DANA",
+      "currenciesAccepted": "IDR",
+      "areaServed": {
+        "@type": "AdministrativeArea",
+        "name": "Kota Medan & Indonesia"
+      }
+    }
+    </script>
+  </head>
+  <body class="min-h-screen antialiased selection:bg-emerald-600 selection:text-white">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
