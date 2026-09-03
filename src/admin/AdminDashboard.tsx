@@ -5,18 +5,22 @@ import { RequestInbox } from './RequestInbox';
 import { NotesManager } from './NotesManager';
 import { DirectOrderManager } from './DirectOrderManager';
 import { isSupabaseConfigured, api } from '../lib/supabase';
-import { Package, AlertCircle, CheckCircle2, Clock, Database, Sparkles, Truck } from 'lucide-react';
+import { Package, AlertCircle, CheckCircle2, Clock, Database, Sparkles, Truck, LogOut, ShieldCheck, Store } from 'lucide-react';
 
 interface AdminDashboardProps {
   products: Product[];
   requests: SpecialRequest[];
   onRefresh: () => void;
+  onLogout?: () => void;
+  onBackToStore?: () => void;
 }
 
 export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   products,
   requests,
-  onRefresh
+  onRefresh,
+  onLogout,
+  onBackToStore
 }) => {
   const [activeTab, setActiveTab] = useState<'products' | 'direct_orders' | 'requests' | 'settings'>('products');
   const [selectedProductForNotes, setSelectedProductForNotes] = useState<Product | null>(null);
@@ -43,6 +47,50 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
   return (
     <div className="space-y-6 sm:space-y-8 animate-fade-in">
+      {/* Admin Top Header with Session & Logout Action */}
+      <div className="p-4 sm:p-5 rounded-2xl dark:bg-[#111827] bg-white dark:border-slate-800 border-slate-200 shadow-md flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div className="flex items-center gap-3">
+          <div className="p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-500">
+            <ShieldCheck className="w-5 h-5" />
+          </div>
+          <div>
+            <div className="flex items-center gap-2">
+              <h1 className="font-display text-base sm:text-lg font-extrabold dark:text-white text-slate-900 tracking-tight">
+                Warung Dewasa Merchant Hub
+              </h1>
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 text-[10px] font-black uppercase bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30 rounded-md">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                Admin Aktif
+              </span>
+            </div>
+            <p className="text-xs dark:text-slate-400 text-slate-500">
+              Pengelolaan Katalog, Pesanan COD Medan & Request Khusus
+            </p>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-2 self-end sm:self-center">
+          {onBackToStore && (
+            <button
+              onClick={onBackToStore}
+              className="inline-flex items-center gap-1.5 min-h-[40px] px-3.5 py-2 rounded-xl dark:bg-slate-800/80 bg-slate-100 hover:bg-slate-200 dark:hover:bg-slate-800 dark:text-slate-300 text-slate-700 border dark:border-slate-700 border-slate-300 text-xs font-bold transition-all active:scale-95 cursor-pointer shadow-xs"
+            >
+              <Store className="w-3.5 h-3.5 text-emerald-500" />
+              <span>Lihat Toko</span>
+            </button>
+          )}
+
+          {onLogout && (
+            <button
+              onClick={onLogout}
+              className="inline-flex items-center gap-1.5 min-h-[40px] px-3.5 py-2 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-600 dark:text-rose-400 border border-rose-500/30 text-xs font-bold transition-all active:scale-95 cursor-pointer shadow-xs"
+            >
+              <LogOut className="w-3.5 h-3.5" />
+              <span>Logout</span>
+            </button>
+          )}
+        </div>
+      </div>
       {/* Metric Cards Grid - Unified Neutral Background with Distinct Accents */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-5">
         {/* Total Products - Sky Blue Accent */}

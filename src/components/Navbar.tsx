@@ -118,8 +118,8 @@ export const Navbar: React.FC<NavbarProps> = ({
               </button>
             ) : (
               <button
-                onClick={login}
-                aria-label="Login"
+                onClick={() => setCurrentView('admin')}
+                aria-label="Login Merchant"
                 className="inline-flex items-center justify-center gap-1.5 min-h-[42px] min-w-[42px] sm:min-w-0 px-2.5 sm:px-3.5 py-2 rounded-xl dark:bg-slate-800/80 bg-slate-100 hover:bg-slate-200 dark:hover:bg-slate-800 dark:text-slate-200 text-slate-700 dark:hover:text-white hover:text-slate-900 text-xs font-bold border dark:border-slate-700/80 border-slate-300 transition-all active:scale-95 cursor-pointer shadow-xs"
               >
                 <LogIn className="w-4 h-4 shrink-0" />

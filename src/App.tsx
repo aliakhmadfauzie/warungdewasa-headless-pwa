@@ -20,6 +20,7 @@ import { Search, Layers, SlidersHorizontal, Flame, TrendingUp, Sparkles, ArrowUp
 const AdminDashboard = lazy(() =>
   import('./admin/AdminDashboard').then((m) => ({ default: m.AdminDashboard }))
 );
+import { AdminLoginForm } from './admin/AdminLoginForm';
 
 /** Minimal skeleton shown while AdminDashboard chunk loads */
 const AdminLoadingFallback = () => (
@@ -34,8 +35,17 @@ export function App() {
   const [currentView, setCurrentView] = useState<'store' | 'admin'>('store');
   // Authentication state persisted via localStorage
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => localStorage.getItem('authUser') === 'true');
-  const login = () => { localStorage.setItem('authUser', 'true'); setIsAuthenticated(true); };
-  const logout = () => { localStorage.removeItem('authUser'); setIsAuthenticated(false); };
+  const login = () => {
+    localStorage.setItem('authUser', 'true');
+    setIsAuthenticated(true);
+    setCurrentView('admin');
+  };
+  const logout = () => {
+    localStorage.removeItem('authUser');
+    localStorage.removeItem('adminSession');
+    setIsAuthenticated(false);
+    setCurrentView('store');
+  };
   // Age verification persisted via localStorage
   const [ageVerified, setAgeVerified] = useState<boolean>(() => localStorage.getItem('ageVerified') === 'true');
   const [products, setProducts] = useState<Product[]>([]);
@@ -470,15 +480,24 @@ export function App() {
               </div>
             )}
           </div>
-        ) : (
+        ) : isAuthenticated ? (
           <div className="animate-fade-in">
             <Suspense fallback={<AdminLoadingFallback />}>
               <AdminDashboard
                 products={products}
                 requests={requests}
                 onRefresh={loadData}
+                onLogout={logout}
+                onBackToStore={() => setCurrentView('store')}
               />
             </Suspense>
+          </div>
+        ) : (
+          <div className="animate-fade-in">
+            <AdminLoginForm
+              onLoginSuccess={login}
+              onBackToStore={() => setCurrentView('store')}
+            />
           </div>
         )}
       </main>
