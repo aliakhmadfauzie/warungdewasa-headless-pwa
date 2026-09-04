@@ -122,33 +122,35 @@ export const primitives = {
 
 export const darkTheme = {
   mode: 'dark' as const,
+  palette: 'Deep Forest Nocturne',
   colors: {
-    canvas: primitives.colors.slate[950],       // #0B0F19 Neutral Dark Canvas
-    canvasForest: primitives.colors.emerald[950], // #0A1A14 Deep Forest Dark
-    surface: primitives.colors.slate[900],      // #111827 Neutral Card Surface
-    surfaceVariant: '#161F30',                  // Elevated Product Container
-    surfaceHover: '#1E293B',
-    surfaceOverlay: 'rgba(11, 15, 25, 0.85)',
+    canvas: '#0A1A14',                          // Deep Forest Dark Canvas
+    canvasForest: '#0A1A14',
+    canvasSlate: primitives.colors.slate[950],  // #0B0F19 Neutral fallback
+    surface: '#0F261D',                         // Deep Forest Card Surface
+    surfaceVariant: '#143327',                  // Elevated Product Container
+    surfaceHover: '#1C4435',
+    surfaceOverlay: 'rgba(10, 26, 20, 0.90)',
     
     // Primary Brand Accents
-    primary: primitives.colors.emerald[600],    // #006C4C Material 3 Emerald
-    primaryHover: primitives.colors.emerald[500],
-    primaryContainer: 'rgba(0, 108, 76, 0.15)',
-    accentMint: primitives.colors.emerald[400], // #34D399 Vibrant Mint
+    primary: '#006C4C',                         // Rich Material 3 Emerald
+    primaryHover: '#059669',
+    primaryContainer: 'rgba(0, 108, 76, 0.20)',
+    accentMint: '#2DD4BF',                      // Teal Mint Accent
     
     // High Contrast Typography
     textPrimary: '#FFFFFF',
-    textSecondary: primitives.colors.slate[300],// #CBD5E1 AA Contrast
-    textMuted: primitives.colors.slate[400],    // #94A3B8
-    textInverse: primitives.colors.slate[950],
+    textSecondary: '#E2E8F0',                   // High Contrast Text
+    textMuted: '#94A3B8',
+    textInverse: '#0A1A14',
     
     // Borders & Dividers
-    border: 'rgba(255, 255, 255, 0.08)',
-    borderSubtle: 'rgba(255, 255, 255, 0.04)',
-    borderFocus: primitives.colors.emerald[500],
+    border: 'rgba(45, 212, 191, 0.15)',
+    borderSubtle: 'rgba(45, 212, 191, 0.08)',
+    borderFocus: '#2DD4BF',
     
     // Semantic States
-    success: primitives.colors.emerald[400],
+    success: '#2DD4BF',
     warning: primitives.colors.semantic.amber.bg,
     danger: primitives.colors.semantic.rose.bg,
     info: primitives.colors.semantic.sky.bg,
@@ -159,21 +161,21 @@ export const darkTheme = {
   },
   glass: {
     level1: {
-      background: 'rgba(17, 24, 39, 0.75)',
+      background: 'rgba(15, 38, 29, 0.75)',
       backdropFilter: 'blur(12px)',
-      border: '1px solid rgba(255, 255, 255, 0.08)',
+      border: '1px solid rgba(45, 212, 191, 0.12)',
       boxShadow: '0 4px 20px -2px rgba(0, 0, 0, 0.5)'
     },
     level2: {
-      background: 'rgba(22, 31, 48, 0.85)',
+      background: 'rgba(20, 51, 39, 0.85)',
       backdropFilter: 'blur(16px)',
-      border: '1px solid rgba(255, 255, 255, 0.12)',
-      boxShadow: '0 8px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 108, 76, 0.1)'
+      border: '1px solid rgba(45, 212, 191, 0.20)',
+      boxShadow: '0 8px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 108, 76, 0.15)'
     },
     modal: {
-      background: 'rgba(17, 24, 39, 0.95)',
+      background: 'rgba(15, 38, 29, 0.95)',
       backdropFilter: 'blur(20px)',
-      border: '1px solid rgba(255, 255, 255, 0.1)',
+      border: '1px solid rgba(45, 212, 191, 0.20)',
       boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.8)'
     }
   },

@@ -4,8 +4,9 @@ import { ProductManager } from './ProductManager';
 import { RequestInbox } from './RequestInbox';
 import { NotesManager } from './NotesManager';
 import { DirectOrderManager } from './DirectOrderManager';
+import { ThemeEditor } from './ThemeEditor';
 import { isSupabaseConfigured, api } from '../lib/supabase';
-import { Package, AlertCircle, CheckCircle2, Clock, Database, Sparkles, Truck, LogOut, ShieldCheck, Store } from 'lucide-react';
+import { Package, AlertCircle, CheckCircle2, Clock, Database, Sparkles, Truck, LogOut, ShieldCheck, Store, Palette } from 'lucide-react';
 
 interface AdminDashboardProps {
   products: Product[];
@@ -22,7 +23,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   onLogout,
   onBackToStore
 }) => {
-  const [activeTab, setActiveTab] = useState<'products' | 'direct_orders' | 'requests' | 'settings'>('products');
+  const [activeTab, setActiveTab] = useState<'products' | 'direct_orders' | 'requests' | 'settings' | 'studio'>('products');
   const [selectedProductForNotes, setSelectedProductForNotes] = useState<Product | null>(null);
   const [directOrders, setDirectOrders] = useState<DirectOrder[]>([]);
 
@@ -47,23 +48,24 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
   return (
     <div className="space-y-6 sm:space-y-8 animate-fade-in">
-      {/* Admin Top Header with Session & Logout Action */}
-      <div className="p-4 sm:p-5 rounded-2xl dark:bg-[#111827] bg-white dark:border-slate-800 border-slate-200 shadow-md flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+      {/* Admin Header — surfaceContainerHigh panel, md-* semantic tokens */}
+      <div className="p-4 sm:p-5 rounded-m3-lg bg-md-surface-container-high border border-md-outline-variant shadow-md flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div className="flex items-center gap-3">
-          <div className="p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-500">
+          <div className="p-2.5 rounded-m3-md bg-md-primary/10 border border-md-primary/30 text-md-primary">
             <ShieldCheck className="w-5 h-5" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="font-display text-base sm:text-lg font-extrabold dark:text-white text-slate-900 tracking-tight">
+              <h1 className="font-display text-base sm:text-lg font-extrabold text-md-on-surface tracking-tight">
                 Warung Dewasa Merchant Hub
               </h1>
-              <span className="inline-flex items-center gap-1 px-2 py-0.5 text-[10px] font-black uppercase bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30 rounded-md">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              {/* Admin Aktif badge — primaryContainer tonal chip */}
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 text-[10px] font-black uppercase bg-md-primary-container text-md-on-primary-container border border-md-primary/20 rounded-m3-sm">
+                <span className="w-1.5 h-1.5 rounded-full bg-md-primary animate-pulse" />
                 Admin Aktif
               </span>
             </div>
-            <p className="text-xs dark:text-slate-400 text-slate-500">
+            <p className="text-xs text-md-on-surface-variant">
               Pengelolaan Katalog, Pesanan COD Medan & Request Khusus
             </p>
           </div>
@@ -73,9 +75,9 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
           {onBackToStore && (
             <button
               onClick={onBackToStore}
-              className="inline-flex items-center gap-1.5 min-h-[40px] px-3.5 py-2 rounded-xl dark:bg-slate-800/80 bg-slate-100 hover:bg-slate-200 dark:hover:bg-slate-800 dark:text-slate-300 text-slate-700 border dark:border-slate-700 border-slate-300 text-xs font-bold transition-all active:scale-95 cursor-pointer shadow-xs"
+              className="inline-flex items-center gap-1.5 min-h-[44px] px-3.5 py-2 rounded-m3-md bg-md-surface-container-highest hover:bg-md-surface-container text-md-on-surface-variant hover:text-md-on-surface border border-md-outline-variant text-xs font-bold transition-colors ease-m3-expressive-fast duration-m3-fast active:scale-95 cursor-pointer"
             >
-              <Store className="w-3.5 h-3.5 text-emerald-500" />
+              <Store className="w-3.5 h-3.5 text-md-primary" />
               <span>Lihat Toko</span>
             </button>
           )}
@@ -83,7 +85,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
           {onLogout && (
             <button
               onClick={onLogout}
-              className="inline-flex items-center gap-1.5 min-h-[40px] px-3.5 py-2 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-600 dark:text-rose-400 border border-rose-500/30 text-xs font-bold transition-all active:scale-95 cursor-pointer shadow-xs"
+              className="inline-flex items-center gap-1.5 min-h-[44px] px-3.5 py-2 rounded-m3-md bg-md-error/10 hover:bg-md-error/20 text-md-error border border-md-error/30 text-xs font-bold transition-colors ease-m3-expressive-fast duration-m3-fast active:scale-95 cursor-pointer"
             >
               <LogOut className="w-3.5 h-3.5" />
               <span>Logout</span>
@@ -91,75 +93,104 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
           )}
         </div>
       </div>
-      {/* Metric Cards Grid - Unified Neutral Background with Distinct Accents */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-5">
-        {/* Total Products - Sky Blue Accent */}
-        <div className="p-4 sm:p-5 rounded-2xl bg-[#111827] border border-slate-800 shadow-md flex items-center gap-4">
-          <div className="p-3 rounded-xl bg-sky-500/10 text-sky-400 border border-sky-500/20">
-            <Package className="w-5 h-5 sm:w-6 sm:h-6" />
-          </div>
-          <div>
-            <span className="text-[11px] text-slate-400 font-semibold uppercase tracking-wider block">Total SKU</span>
-            <div className="font-display text-xl sm:text-2xl font-black text-white">{totalProducts}</div>
-          </div>
-        </div>
+      {/* ── Enhanced Bento-Box KPI Layout ────────────────────────────────────
+           Asymmetric priority layout:
+           - Large hero tile (col-span-1 sm:col-span-2): Urgent operational action (COD orders)
+             with subtle gradient glow, icon frame, and micro-pulsing badge
+           - Supporting metrics with distinct semantic accent containers
+      ────────────────────────────────────────────────────────────────────── */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
 
-        {/* Ready Stock - Emerald Accent (#10B981) */}
-        <div className="p-4 sm:p-5 rounded-2xl bg-[#111827] border border-slate-800 shadow-md flex items-center gap-4">
-          <div className="p-3 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-            <CheckCircle2 className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-400" />
-          </div>
-          <div>
-            <span className="text-[11px] text-slate-400 font-semibold uppercase tracking-wider block">Ready Stock</span>
-            <div className="font-display text-xl sm:text-2xl font-black text-emerald-400">{inStock}</div>
-          </div>
-        </div>
-
-        {/* Direct Orders / COD - Emerald Accent */}
-        <div 
+        {/* Urgent Action Bento: Direct Orders (Spans 2 cols on mobile/tablet if pending orders exist) */}
+        <div
           onClick={() => setActiveTab('direct_orders')}
-          className="p-4 sm:p-5 rounded-2xl bg-[#111827] border border-slate-800 hover:border-emerald-500/60 transition-colors shadow-md flex items-center gap-4 cursor-pointer"
+          className="col-span-1 sm:col-span-2 relative p-5 rounded-2xl bg-gradient-to-br from-[#111827] to-[#161F30] border border-emerald-500/30 hover:border-emerald-500/60 transition-all duration-300 shadow-card cursor-pointer group flex flex-col justify-between overflow-hidden"
         >
-          <div className="p-3 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-            <Truck className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-400" />
+          <div className="flex items-center justify-between">
+            <div className="p-3 rounded-xl bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
+              <Truck className="w-6 h-6" />
+            </div>
+            {pendingDirectOrders > 0 ? (
+              <span className="flex items-center gap-1.5 px-2.5 py-1 text-[11px] bg-amber-400 text-slate-950 font-black rounded-full shadow-md animate-pulse">
+                <span className="w-1.5 h-1.5 rounded-full bg-slate-950" />
+                {pendingDirectOrders} Perlu Dikirim
+              </span>
+            ) : (
+              <span className="px-2 py-0.5 text-[10px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-full">
+                Semua Terkirim
+              </span>
+            )}
           </div>
-          <div>
-            <span className="text-[11px] text-slate-400 font-semibold uppercase tracking-wider block">Pesanan COD / Kurir</span>
-            <div className="font-display text-xl sm:text-2xl font-black text-emerald-400 flex items-center gap-2">
-              <span>{directOrders.length}</span>
-              {pendingDirectOrders > 0 && (
-                <span className="px-1.5 py-0.5 text-[10px] bg-amber-400 text-slate-950 font-black rounded-full shadow-sm">
-                  {pendingDirectOrders} Baru
-                </span>
-              )}
+
+          <div className="mt-4">
+            <span className="text-xs text-slate-400 font-semibold uppercase tracking-wider">
+              Pesanan COD & Kurir Medan
+            </span>
+            <div className="font-display text-2xl sm:text-3xl font-black text-white mt-0.5 flex items-baseline gap-2">
+              <span className="tabular-nums">{directOrders.length}</span>
+              <span className="text-xs text-emerald-400/90 font-medium">pesanan aktif</span>
             </div>
           </div>
         </div>
 
-        {/* Pending Requests - Soft Indigo Accent (#818CF8) */}
-        <div 
-          onClick={() => setActiveTab('requests')}
-          className="p-4 sm:p-5 rounded-2xl bg-[#111827] border border-slate-800 hover:border-indigo-500/60 transition-colors shadow-md flex items-center gap-4 cursor-pointer"
-        >
-          <div className="p-3 rounded-xl bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
-            <Clock className="w-5 h-5 sm:w-6 sm:h-6" />
+        {/* Ready Stock */}
+        <div className="p-5 rounded-2xl bg-surface-1 border border-white/5 shadow-card flex flex-col justify-between">
+          <div className="flex items-center justify-between">
+            <div className="p-3 rounded-xl bg-teal-500/10 text-teal-400 border border-teal-500/20">
+              <CheckCircle2 className="w-6 h-6" />
+            </div>
+            <span className="text-[10px] text-teal-400/80 font-bold px-2 py-0.5 rounded-md bg-teal-500/10 border border-teal-500/20">
+              {totalProducts > 0 ? Math.round((inStock / totalProducts) * 100) : 0}% Siap Kirim
+            </span>
           </div>
-          <div>
-            <span className="text-[11px] text-slate-400 font-semibold uppercase tracking-wider block">Inbox Request</span>
-            <div className="font-display text-xl sm:text-2xl font-black text-indigo-400">{pendingRequests}</div>
+          <div className="mt-4">
+            <span className="text-xs text-slate-400 font-semibold uppercase tracking-wider">
+              Ready Stock
+            </span>
+            <div className="font-display text-2xl sm:text-3xl font-black text-teal-400 mt-0.5 flex items-baseline gap-1.5">
+              <span className="tabular-nums">{inStock}</span>
+              <span className="text-xs text-slate-400 font-normal">/ {totalProducts} SKU</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Inbox Requests */}
+        <div
+          onClick={() => setActiveTab('requests')}
+          className="p-5 rounded-2xl bg-surface-1 border border-white/5 hover:border-indigo-500/40 transition-all shadow-card cursor-pointer flex flex-col justify-between group"
+        >
+          <div className="flex items-center justify-between">
+            <div className="p-3 rounded-xl bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
+              <Clock className="w-6 h-6" />
+            </div>
+            {pendingRequests > 0 ? (
+              <span className="px-2 py-0.5 text-[11px] bg-indigo-500/20 text-indigo-300 font-bold border border-indigo-500/40 rounded-full">
+                {pendingRequests} Unread
+              </span>
+            ) : (
+              <span className="text-[10px] text-slate-500 font-medium">Kotak Masuk</span>
+            )}
+          </div>
+          <div className="mt-4">
+            <span className="text-xs text-slate-400 font-semibold uppercase tracking-wider">
+              Inbox Request
+            </span>
+            <div className="font-display text-2xl sm:text-3xl font-black text-indigo-400 mt-0.5 flex items-baseline gap-1.5">
+              <span className="tabular-nums">{pendingRequests}</span>
+              <span className="text-xs text-slate-400 font-normal">permintaan</span>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Interactive Visualization: Inventory & Category Analytics */}
+      {/* Analytics — surfaceContainer panels, no drop-shadow */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
-        {/* SVG Donut Stock Breakdown with Base Track */}
-        <div className="p-5 sm:p-6 bg-[#111827] border border-slate-800 rounded-2xl shadow-md flex flex-col justify-between space-y-4">
+        <div className="p-5 sm:p-6 bg-md-surface-container border border-md-outline-variant rounded-m3-lg flex flex-col justify-between space-y-4">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold font-display uppercase tracking-wider text-slate-300">
+            <span className="text-xs font-bold font-display uppercase tracking-wider text-md-on-surface-variant">
               Kesehatan Stok Inventori
             </span>
-            <span className="text-[11px] text-emerald-400 font-semibold">
+            <span className="text-[11px] text-md-primary font-semibold">
               {totalProducts > 0 ? Math.round((inStock / totalProducts) * 100) : 0}% Sehat
             </span>
           </div>
@@ -187,38 +218,35 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                   d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                 />
               </svg>
-              {/* Perfectly Centered Gauge Content with High Contrast #E2E8F0 */}
               <div className="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none">
-                <span className="font-display text-xl font-black text-white leading-none">{inStock}</span>
-                <span className="text-[10px] text-slate-200 font-bold uppercase tracking-wider mt-1">READY</span>
+                <span className="tabular-nums font-display text-xl font-black text-md-on-surface leading-none">{inStock}</span>
+                <span className="text-[10px] text-md-on-surface-variant font-bold uppercase tracking-wider mt-1">READY</span>
               </div>
             </div>
 
-            {/* Legend */}
             <div className="space-y-2 text-xs">
               <div className="flex items-center gap-2">
-                <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
-                <span className="text-slate-300">Ready Stock: <strong>{inStock}</strong></span>
+                <span className="w-2.5 h-2.5 rounded-full bg-md-primary" />
+                <span className="text-md-on-surface-variant">Ready: <strong className="text-md-on-surface">{inStock}</strong></span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
-                <span className="text-slate-300">Stok Kritis: <strong>{lowStock}</strong></span>
+                <span className="w-2.5 h-2.5 rounded-full bg-md-amber-badge" />
+                <span className="text-md-on-surface-variant">Kritis: <strong className="text-md-on-surface">{lowStock}</strong></span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="w-2.5 h-2.5 rounded-full bg-sky-500" />
-                <span className="text-slate-300">Pre-Order: <strong>{products.filter(p => p.stock_status === 'pre_order').length}</strong></span>
+                <span className="w-2.5 h-2.5 rounded-full bg-md-tertiary" />
+                <span className="text-md-on-surface-variant">Pre-Order: <strong className="text-md-on-surface">{products.filter(p => p.stock_status === 'pre_order').length}</strong></span>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Category Share Distribution Bar Charts */}
-        <div className="lg:col-span-2 p-5 sm:p-6 bg-[#111827] border border-slate-800 rounded-2xl shadow-md space-y-4">
+        <div className="lg:col-span-2 p-5 sm:p-6 bg-md-surface-container border border-md-outline-variant rounded-m3-lg space-y-4">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold font-display uppercase tracking-wider text-slate-300">
+            <span className="text-xs font-bold font-display uppercase tracking-wider text-md-on-surface-variant">
               Distribusi SKU per Kategori
             </span>
-            <span className="text-[11px] text-slate-400">
+            <span className="text-[11px] text-md-on-surface-variant">
               {Object.keys(products.reduce((acc, p) => ({ ...acc, [p.category]: true }), {})).length} Kategori Aktif
             </span>
           </div>
@@ -237,12 +265,13 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 return (
                   <div key={cat} className="space-y-1">
                     <div className="flex items-center justify-between text-xs">
-                      <span className="text-slate-300 font-semibold">{cat}</span>
-                      <span className="text-slate-400">{count} SKU ({pct}%)</span>
+                      <span className="text-md-on-surface font-semibold">{cat}</span>
+                      <span className="tabular-nums text-md-on-surface-variant">{count} SKU ({pct}%)</span>
                     </div>
-                    <div className="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+                    {/* Progress bar: surfaceContainerHighest track, md-primary fill */}
+                    <div className="w-full h-2 bg-md-surface-container-highest rounded-full overflow-hidden">
                       <div
-                        className="h-full bg-gradient-to-r from-emerald-600 to-teal-400 rounded-full transition-all duration-500"
+                        className="h-full bg-md-primary rounded-full transition-all duration-500 ease-m3-expressive-spatial"
                         style={{ width: `${pct}%` }}
                       />
                     </div>
@@ -253,42 +282,39 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
         </div>
       </div>
 
-      {/* Navigation Tabs (Touch friendly 44px+ bar with horizontal swipe) */}
-      <div className="flex items-center gap-2 border-b border-slate-800 pb-3 overflow-x-auto scrollbar-none no-scrollbar">
+      {/* Nav Tabs — M3 segmented tab bar, 44px touch targets, outline-variant border */}
+      <div className="flex items-center gap-1.5 border-b border-md-outline-variant pb-3 overflow-x-auto scrollbar-none no-scrollbar">
         <button
           onClick={() => setActiveTab('products')}
-          className={`flex items-center gap-2 min-h-[44px] px-4 py-2.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap active:scale-95 cursor-pointer shrink-0 ${
+          className={`flex items-center gap-2 min-h-[44px] px-4 py-2.5 rounded-m3-sm text-xs font-bold transition-colors ease-m3-expressive-fast duration-m3-fast whitespace-nowrap active:scale-95 cursor-pointer shrink-0 ${
             activeTab === 'products'
-              ? 'bg-emerald-600 text-white shadow-md shadow-emerald-950/40 font-display'
-              : 'bg-[#111827] text-slate-300 hover:text-white border border-slate-800'
+              ? 'bg-md-primary text-md-on-primary'
+              : 'bg-md-surface-container text-md-on-surface-variant hover:text-md-on-surface border border-md-outline-variant'
           }`}
         >
-          <Package className="w-4 h-4 text-emerald-400" />
+          <Package className="w-4 h-4" />
           <span>Katalog Produk</span>
-          <span className="px-1.5 py-0.5 text-[10px] bg-slate-800 text-slate-300 rounded-full font-bold">
+          <span className="tabular-nums px-1.5 py-0.5 text-[10px] bg-md-surface-container-highest text-md-on-surface-variant rounded-m3-full font-bold">
             {totalProducts}
           </span>
         </button>
 
         <button
-          onClick={() => {
-            setActiveTab('direct_orders');
-            loadDirectOrders();
-          }}
-          className={`flex items-center gap-2 min-h-[44px] px-4 py-2.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap active:scale-95 cursor-pointer shrink-0 ${
+          onClick={() => { setActiveTab('direct_orders'); loadDirectOrders(); }}
+          className={`flex items-center gap-2 min-h-[44px] px-4 py-2.5 rounded-m3-sm text-xs font-bold transition-colors ease-m3-expressive-fast duration-m3-fast whitespace-nowrap active:scale-95 cursor-pointer shrink-0 ${
             activeTab === 'direct_orders'
-              ? 'bg-emerald-600 text-white shadow-md shadow-emerald-950/40 font-display'
-              : 'bg-[#111827] text-slate-300 hover:text-white border border-slate-800'
+              ? 'bg-md-primary text-md-on-primary'
+              : 'bg-md-surface-container text-md-on-surface-variant hover:text-md-on-surface border border-md-outline-variant'
           }`}
         >
-          <Truck className="w-4 h-4 text-emerald-400" />
+          <Truck className="w-4 h-4" />
           <span>Pesanan COD & Kurir</span>
           {pendingDirectOrders > 0 ? (
-            <span className="px-1.5 py-0.5 text-[10px] bg-amber-400 text-slate-950 font-black rounded-full shadow-sm">
+            <span className="tabular-nums px-1.5 py-0.5 text-[10px] bg-md-amber-badge text-md-on-amber-badge font-black rounded-m3-full shadow-sm">
               {pendingDirectOrders} Baru
             </span>
           ) : (
-            <span className="px-1.5 py-0.5 text-[10px] bg-slate-800 text-slate-300 rounded-full font-bold">
+            <span className="tabular-nums px-1.5 py-0.5 text-[10px] bg-md-surface-container-highest text-md-on-surface-variant rounded-m3-full font-bold">
               {directOrders.length}
             </span>
           )}
@@ -296,20 +322,20 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
         <button
           onClick={() => setActiveTab('requests')}
-          className={`flex items-center gap-2 min-h-[44px] px-4 py-2.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap active:scale-95 cursor-pointer shrink-0 ${
+          className={`flex items-center gap-2 min-h-[44px] px-4 py-2.5 rounded-m3-sm text-xs font-bold transition-colors ease-m3-expressive-fast duration-m3-fast whitespace-nowrap active:scale-95 cursor-pointer shrink-0 ${
             activeTab === 'requests'
-              ? 'bg-emerald-600 text-white shadow-md shadow-emerald-950/40 font-display'
-              : 'bg-[#111827] text-slate-300 hover:text-white border border-slate-800'
+              ? 'bg-md-primary text-md-on-primary'
+              : 'bg-md-surface-container text-md-on-surface-variant hover:text-md-on-surface border border-md-outline-variant'
           }`}
         >
-          <Clock className="w-4 h-4 text-indigo-400" />
+          <Clock className="w-4 h-4" />
           <span>Inbox Request</span>
           {pendingRequests > 0 ? (
-            <span className="px-1.5 py-0.5 text-[10px] bg-amber-400 text-slate-950 font-black rounded-full shadow-sm">
+            <span className="tabular-nums px-1.5 py-0.5 text-[10px] bg-md-amber-badge text-md-on-amber-badge font-black rounded-m3-full shadow-sm">
               {pendingRequests} Baru
             </span>
           ) : (
-            <span className="px-1.5 py-0.5 text-[10px] bg-slate-800 text-slate-300 rounded-full font-bold">
+            <span className="tabular-nums px-1.5 py-0.5 text-[10px] bg-md-surface-container-highest text-md-on-surface-variant rounded-m3-full font-bold">
               {requests.length}
             </span>
           )}
@@ -317,14 +343,29 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
         <button
           onClick={() => setActiveTab('settings')}
-          className={`flex items-center gap-2 min-h-[44px] px-4 py-2.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap active:scale-95 cursor-pointer shrink-0 ${
+          className={`flex items-center gap-2 min-h-[44px] px-4 py-2.5 rounded-m3-sm text-xs font-bold transition-colors ease-m3-expressive-fast duration-m3-fast whitespace-nowrap active:scale-95 cursor-pointer shrink-0 ${
             activeTab === 'settings'
-              ? 'bg-emerald-600 text-white shadow-md shadow-emerald-950/40 font-display'
-              : 'bg-[#111827] text-slate-300 hover:text-white border border-slate-800'
+              ? 'bg-md-primary text-md-on-primary'
+              : 'bg-md-surface-container text-md-on-surface-variant hover:text-md-on-surface border border-md-outline-variant'
           }`}
         >
-          <Database className="w-4 h-4 text-emerald-400" />
+          <Database className="w-4 h-4" />
           <span>Database & Offline</span>
+        </button>
+
+        <button
+          onClick={() => setActiveTab('studio')}
+          className={`flex items-center gap-2 min-h-[44px] px-4 py-2.5 rounded-m3-sm text-xs font-bold transition-colors ease-m3-expressive-fast duration-m3-fast whitespace-nowrap active:scale-95 cursor-pointer shrink-0 ${
+            activeTab === 'studio'
+              ? 'bg-md-primary text-md-on-primary shadow-md'
+              : 'bg-md-surface-container text-md-on-surface-variant hover:text-md-on-surface border border-md-outline-variant'
+          }`}
+        >
+          <Palette className="w-4 h-4 text-emerald-400" />
+          <span>Studio &amp; Theme Editor</span>
+          <span className="px-1.5 py-0.2 text-[9px] bg-emerald-500/20 text-emerald-300 font-extrabold rounded-full border border-emerald-500/30">
+            PRO
+          </span>
         </button>
       </div>
 
@@ -350,33 +391,41 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
         <RequestInbox requests={requests} onRefresh={onRefresh} />
       )}
 
+      {activeTab === 'studio' && (
+        <ThemeEditor products={products} />
+      )}
+
       {activeTab === 'settings' && (
-        <div className="p-6 sm:p-8 bg-[#111827] border border-slate-800 rounded-2xl shadow-md space-y-5">
+        <div className="p-6 sm:p-8 bg-md-surface-container border border-md-outline-variant rounded-m3-lg space-y-5">
           <div className="flex items-center gap-3.5">
-            <div className={`p-3 rounded-xl border ${isSupabaseConfigured ? 'bg-emerald-500/10 border-emerald-500/25 text-emerald-400' : 'bg-amber-500/10 border-amber-500/25 text-amber-400'}`}>
+            <div className={`p-3 rounded-m3-md border ${
+              isSupabaseConfigured
+                ? 'bg-md-primary/10 border-md-primary/25 text-md-primary'
+                : 'bg-md-amber-badge/10 border-md-amber-badge/25 text-md-amber-badge'
+            }`}>
               <Database className="w-6 h-6" />
             </div>
             <div>
-              <h3 className="font-display text-base font-bold text-white">
+              <h3 className="font-display text-base font-bold text-md-on-surface">
                 {isSupabaseConfigured ? 'Supabase Database Connected' : 'Running on Instant Local Offline Engine'}
               </h3>
-              <p className="text-xs text-slate-400 mt-0.5">
-                {isSupabaseConfigured 
-                  ? 'Real-time PostgreSQL remote database aktif dan tersinkronisasi.' 
+              <p className="text-xs text-md-on-surface-variant mt-0.5">
+                {isSupabaseConfigured
+                  ? 'Real-time PostgreSQL remote database aktif dan tersinkronisasi.'
                   : 'Aplikasi berjalan dengan full local offline fallback. Tambahkan VITE_SUPABASE_URL & VITE_SUPABASE_ANON_KEY di environment untuk remote sync.'}
               </p>
             </div>
           </div>
 
-          <div className="p-5 rounded-xl bg-[#0B0F19] border border-slate-800 text-xs font-mono text-slate-200 space-y-2.5">
-            <div className="text-emerald-400 font-bold flex items-center gap-2">
+          <div className="p-5 rounded-m3-md bg-md-surface-container-lowest border border-md-outline-variant text-xs font-mono text-md-on-surface space-y-2.5">
+            <div className="text-md-primary font-bold flex items-center gap-2">
               <Sparkles className="w-3.5 h-3.5" />
               <span>PostgreSQL Schema Definition:</span>
             </div>
-            <div className="bg-slate-900 px-3 py-1.5 rounded-lg border border-slate-800 text-emerald-300">
+            <div className="bg-md-surface-container px-3 py-1.5 rounded-m3-sm border border-md-outline-variant text-md-primary">
               supabase/schema.sql
             </div>
-            <div className="text-slate-400 text-[11px] pt-1 leading-relaxed">
+            <div className="text-md-on-surface-variant text-[11px] pt-1 leading-relaxed">
               Schema telah teroptimasi dengan tabel `products`, `merchant_notes`, `special_requests`, ENUM status, dan Row Level Security (RLS) policies.
             </div>
           </div>

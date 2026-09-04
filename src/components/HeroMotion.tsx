@@ -96,101 +96,146 @@ export const HeroMotion: React.FC<HeroMotionProps> = ({
   return (
     <div
       ref={heroRef}
-      className="hero-container relative overflow-hidden rounded-2xl bg-slate-900 border border-slate-800 p-5 sm:p-10 lg:p-12 shadow-2xl mt-0"
+      className="hero-container relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-900 via-[#0D1524] to-[#0A101D] border border-white/10 p-6 sm:p-10 lg:p-12 shadow-2xl mt-0"
     >
       {/* Auto-Sliding Product Showcase Background */}
       <HeroProductSlider />
 
       {/* Ambient glow particles — CSS infinite animations, zero JS cost */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden -z-0">
-        <div className="absolute -top-16 -right-16 w-80 h-80 bg-emerald-500/8 rounded-full blur-3xl hero-particle-a" />
-        <div className="absolute -bottom-16 -left-16 w-72 h-72 bg-teal-600/6 rounded-full blur-3xl hero-particle-b" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-emerald-900/15 via-slate-900/0 to-transparent" />
+        <div className="absolute -top-16 -right-16 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl hero-particle-a" />
+        <div className="absolute -bottom-16 -left-16 w-80 h-80 bg-teal-600/8 rounded-full blur-3xl hero-particle-b" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-emerald-950/25 via-slate-900/0 to-transparent" />
       </div>
 
-      {/* Hero Content */}
-      <div className="relative z-10 max-w-3xl space-y-6">
+      {/* ── Asymmetric Layout Grid (Prompt 02: Break the Symmetry) ─────────── */}
+      <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
 
-        {/* Badge — CSS fade-down entrance */}
-        <div className="hero-badge-el inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full badge-gradient-emerald text-xs font-bold shadow-xs backdrop-blur-md">
-          <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
-          <span>Headless E-Commerce PWA • {totalCatalogCount}+ Verified SKU Catalog</span>
-        </div>
+        {/* ── Left Column: Sharpened Message & Direct Conversion CTA (Prompt 01) */}
+        <div className="lg:col-span-7 space-y-5 sm:space-y-6">
 
-        {/*
-          LCP CRITICAL: <h1> is rendered FULLY VISIBLE on first paint (no opacity:0, no transform).
-          CSS animation uses fill-mode:forwards (not backwards) so text is visible before animation.
-          This ensures Lighthouse detects the heading as LCP on first paint.
-        */}
-        <h1 className="hero-heading font-display text-2xl sm:text-4xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight">
-          <div className="flex flex-wrap gap-x-2 sm:gap-x-3 gap-y-1">
-            {line1Words.map((word, idx) => (
-              <span
-                key={idx}
-                className="hero-word-el inline-block text-gradient-silver"
-                style={{ animationDelay: `${0.05 + idx * 0.05}s` }}
-              >
-                {word}
-              </span>
-            ))}
+          {/* Signature Kicker Tag (Prompt 07) */}
+          <div className="hero-badge-el kicker-badge shadow-sm">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+            <span>Khusus Kota Medan &amp; Sekitarnya</span>
+            <span className="text-emerald-500/60">•</span>
+            <span className="text-slate-300 font-semibold">{totalCatalogCount}+ SKU Siap Kirim</span>
           </div>
-          <div className="flex flex-wrap gap-x-2 sm:gap-x-3 gap-y-1 mt-0.5">
-            {line2Words.map((word, idx) => (
-              <span
-                key={idx}
-                className="hero-word-el inline-block text-gradient-emerald font-black"
-                style={{ animationDelay: `${0.2 + idx * 0.05}s` }}
-              >
-                {word}
-              </span>
-            ))}
-          </div>
-        </h1>
 
-        {/* Subtitle — CSS fade-up */}
-        <p className="hero-desc-el text-xs sm:text-sm lg:text-base text-slate-300 leading-relaxed max-w-2xl font-normal">
-          Koleksi kondom ultra-thin, pelumas premium, dan varian aroma resmi. Review autentik, kemasan privasi aman, checkout via Shopee &amp; Tokopedia resmi.
-        </p>
+          {/* 
+            Sharpen the Message (Prompt 01) & Scale the Type (Prompt 05):
+            Main headline makes a clear, plain-spoken promise with ONE key phrase in accent color.
+          */}
+          <h1 className="hero-heading font-display text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.12]">
+            Belanja Produk Dewasa:{' '}
+            <span className="text-gradient-emerald inline-block font-black drop-shadow-sm">
+              100% Diskrit &amp; Privasi
+            </span>
+            , Bayar COD di Tempat.
+          </h1>
 
-        {/* CTA Buttons — CSS scale-in */}
-        <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
-          <button
-            ref={magBtn1}
-            onClick={onExploreClick}
-            className="hero-cta-el group relative inline-flex items-center justify-center gap-2.5 w-full sm:w-auto min-h-[48px] px-6 py-3.5 rounded-2xl btn-gradient-emerald text-white font-display font-bold text-sm shadow-xl transition-all active:scale-95 cursor-pointer will-change-transform"
-          >
-            <Layers className="w-4 h-4 text-emerald-100" />
-            <span>Jelajahi Katalog {totalCatalogCount} SKU</span>
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </button>
+          {/* Specific After-State Subtitle */}
+          <p className="hero-desc-el text-sm sm:text-base text-slate-300 leading-relaxed max-w-xl font-normal">
+            Kemasan cokelat polos tanpa label produk. Diantar kurir lokal toko dalam <strong className="text-white font-semibold">45–90 menit</strong>, tanpa riwayat transaksi tercatat di aplikasi marketplace Anda.
+          </p>
 
-          <button
-            ref={magBtn2}
-            onClick={onOpenFilterClick}
-            className="hero-cta-el hero-cta-delay inline-flex items-center justify-center gap-2 w-full sm:w-auto min-h-[48px] px-5 py-3.5 rounded-2xl bg-slate-800/80 hover:bg-slate-800 text-slate-200 hover:text-white font-display font-bold text-sm border border-slate-700/80 backdrop-blur-md shadow-md active:scale-95 transition-colors cursor-pointer will-change-transform"
-          >
-            <SlidersHorizontal className="w-4 h-4 text-emerald-400" />
-            <span>Filter Cepat</span>
-          </button>
-        </div>
-
-        {/* Trust Badges — CSS stagger */}
-        <div className="pt-2 flex flex-wrap items-center gap-2 sm:gap-3 text-xs font-semibold text-slate-300">
-          {[
-            { icon: <ShieldCheck className="w-3.5 h-3.5 text-emerald-400 shrink-0" />, label: '100% Produk Original', delay: '0.55s' },
-            { icon: <Lock className="w-3.5 h-3.5 text-emerald-400 shrink-0" />, label: 'Kemasan Polos & Privasi', delay: '0.63s' },
-            { icon: <Truck className="w-3.5 h-3.5 text-emerald-400 shrink-0" />, label: 'Pengiriman Cepat (COD Medan)', delay: '0.71s' },
-          ].map(({ icon, label, delay }) => (
-            <div
-              key={label}
-              className="hero-pill-el inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-800/70 border border-slate-700/60 shadow-xs"
-              style={{ animationDelay: delay }}
+          {/* Action CTAs (Prompt 06: Give Color Meaning - Bright Accent for primary action) */}
+          <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
+            <button
+              ref={magBtn1}
+              onClick={onExploreClick}
+              className="hero-cta-el group relative inline-flex items-center justify-center gap-2.5 w-full sm:w-auto min-h-[48px] px-6 py-3.5 rounded-2xl btn-gradient-emerald text-white font-display font-bold text-sm shadow-xl transition-all active:scale-95 cursor-pointer will-change-transform"
             >
-              {icon}
-              <span>{label}</span>
-            </div>
-          ))}
+              <Truck className="w-4 h-4 text-emerald-100" />
+              <span>Pesan Cepat COD Medan</span>
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </button>
+
+            <button
+              ref={magBtn2}
+              onClick={onOpenFilterClick}
+              className="hero-cta-el hero-cta-delay inline-flex items-center justify-center gap-2 w-full sm:w-auto min-h-[48px] px-5 py-3.5 rounded-2xl bg-slate-800/80 hover:bg-slate-800 text-slate-200 hover:text-white font-display font-bold text-sm border border-slate-700/80 backdrop-blur-md shadow-md active:scale-95 transition-colors cursor-pointer will-change-transform"
+            >
+              <SlidersHorizontal className="w-4 h-4 text-emerald-400" />
+              <span>Filter {totalCatalogCount} SKU</span>
+            </button>
+          </div>
+
+          {/* Trust Guarantee Badges */}
+          <div className="pt-2 flex flex-wrap items-center gap-2 sm:gap-3 text-xs font-semibold text-slate-300">
+            {[
+              { icon: <ShieldCheck className="w-3.5 h-3.5 text-emerald-400 shrink-0" />, label: '100% Produk Original' },
+              { icon: <Lock className="w-3.5 h-3.5 text-emerald-400 shrink-0" />, label: 'Kemasan Polos Anti Terawang' },
+              { icon: <Truck className="w-3.5 h-3.5 text-emerald-400 shrink-0" />, label: 'Kurir OTW Medan Hari Ini' },
+            ].map(({ icon, label }) => (
+              <div
+                key={label}
+                className="hero-pill-el inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-800/70 border border-slate-700/60 shadow-xs"
+              >
+                {icon}
+                <span>{label}</span>
+              </div>
+            ))}
+          </div>
         </div>
+
+        {/* ── Right Column: Interactive Highlight Card Breaking Grid (Prompt 02) ── */}
+        <div className="lg:col-span-5 relative mt-4 lg:mt-0">
+          <div className="relative mx-auto max-w-sm lg:max-w-none rounded-2xl bg-slate-900/90 border border-emerald-500/30 p-5 shadow-2xl backdrop-blur-xl group hover:border-emerald-500/60 transition-all duration-300">
+            {/* Header with live status pulse */}
+            <div className="flex items-center justify-between pb-4 border-b border-white/5">
+              <div className="flex items-center gap-2">
+                <span className="relative flex h-2.5 w-2.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500" />
+                </span>
+                <span className="text-xs font-bold text-slate-200">Kurir Toko Siap Kirim</span>
+              </div>
+              <span className="px-2 py-0.5 text-[10px] font-black uppercase tracking-wider bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 rounded-full">
+                Medan &amp; Sekitarnya
+              </span>
+            </div>
+
+            {/* Courier ETA & Live Delivery Simulation */}
+            <div className="py-4 space-y-3">
+              <div className="flex items-center justify-between text-xs">
+                <span className="text-slate-400">Estimasi Pengantaran</span>
+                <span className="text-emerald-400 font-bold font-display text-sm">45 – 90 Menit</span>
+              </div>
+
+              {/* Progress bar visual */}
+              <div className="w-full h-1.5 rounded-full bg-slate-800 overflow-hidden">
+                <div className="h-full bg-gradient-to-r from-emerald-500 to-teal-400 rounded-full w-3/4 animate-pulse" />
+              </div>
+
+              {/* Discreet Packaging Highlights Box */}
+              <div className="p-3 rounded-xl bg-slate-950/60 border border-white/5 space-y-2">
+                <div className="flex items-center gap-2 text-xs font-semibold text-slate-200">
+                  <Lock className="w-3.5 h-3.5 text-emerald-400" />
+                  <span>Prosedur Privasi Terstandar:</span>
+                </div>
+                <ul className="text-[11px] text-slate-400 space-y-1 pl-5 list-disc marker:text-emerald-400">
+                  <li>Kardus tebal polos tanpa label nama produk</li>
+                  <li>Resi pengiriman bertuliskan "Aksesoris / Suplemen"</li>
+                  <li>Pembayaran tunai langsung ke tangan kurir di lokasi</li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Floating Highlight Out-of-Grid Pill (The single most impressive feature) */}
+            <div className="pt-1 flex items-center justify-between">
+              <span className="text-[11px] text-slate-400">Tanpa rekening bank</span>
+              <button
+                onClick={onExploreClick}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 text-xs font-bold border border-emerald-500/40 transition-all active:scale-95 cursor-pointer"
+              >
+                <span>Lihat Produk COD</span>
+                <ArrowRight className="w-3 h-3" />
+              </button>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   );

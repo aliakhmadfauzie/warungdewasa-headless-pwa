@@ -78,7 +78,7 @@ const PAYMENT_OPTIONS: PaymentOption[] = [
     name: 'GoPay',
     provider: 'Gojek / GoTo',
     accountNumber: '081260889901',
-    accountName: 'SALTDISTRIBUTE OFFICIAL',
+    accountName: 'WARUNG DEWASA MEDAN',
     badgeBg: 'bg-[#00AA13]/15 text-[#00AA13] border-[#00AA13]/30',
     logo: (
       <div className="w-8 h-8 rounded-lg bg-[#00AA13] text-white flex items-center justify-center font-black text-xs shadow-sm">
@@ -92,7 +92,7 @@ const PAYMENT_OPTIONS: PaymentOption[] = [
     name: 'ShopeePay',
     provider: 'Shopee Official',
     accountNumber: '081260889901',
-    accountName: 'SALTDISTRIBUTE OFFICIAL',
+    accountName: 'WARUNG DEWASA MEDAN',
     badgeBg: 'bg-[#EE4D2D]/15 text-[#FF5722] border-[#EE4D2D]/30',
     logo: (
       <div className="w-8 h-8 rounded-lg bg-[#EE4D2D] text-white flex items-center justify-center font-black text-xs shadow-sm">
@@ -106,7 +106,7 @@ const PAYMENT_OPTIONS: PaymentOption[] = [
     name: 'OVO',
     provider: 'OVO Payment',
     accountNumber: '081260889901',
-    accountName: 'SALTDISTRIBUTE OFFICIAL',
+    accountName: 'WARUNG DEWASA MEDAN',
     badgeBg: 'bg-[#4C3299]/20 text-[#A78BFA] border-[#4C3299]/40',
     logo: (
       <div className="w-8 h-8 rounded-lg bg-[#4C3299] text-white flex items-center justify-center font-black text-xs shadow-sm">
@@ -120,7 +120,7 @@ const PAYMENT_OPTIONS: PaymentOption[] = [
     name: 'DANA',
     provider: 'DANA Indonesia',
     accountNumber: '081260889901',
-    accountName: 'SALTDISTRIBUTE OFFICIAL',
+    accountName: 'WARUNG DEWASA MEDAN',
     badgeBg: 'bg-[#118EEA]/15 text-[#38BDF8] border-[#118EEA]/30',
     logo: (
       <div className="w-8 h-8 rounded-lg bg-[#118EEA] text-white flex items-center justify-center font-black text-xs shadow-sm">
@@ -134,7 +134,7 @@ const PAYMENT_OPTIONS: PaymentOption[] = [
     name: 'BCA (Bank Central Asia)',
     provider: 'Transfer Antar Bank / VA',
     accountNumber: '8280912831',
-    accountName: 'SALTDISTRIBUTE OFFICIAL',
+    accountName: 'WARUNG DEWASA MEDAN',
     badgeBg: 'bg-[#005EAA]/15 text-[#60A5FA] border-[#005EAA]/30',
     logo: (
       <div className="w-8 h-8 rounded-lg bg-[#005EAA] text-white flex items-center justify-center font-black text-xs shadow-sm">
@@ -148,7 +148,7 @@ const PAYMENT_OPTIONS: PaymentOption[] = [
     name: 'Bank Mandiri',
     provider: 'Transfer Antar Bank / Livin',
     accountNumber: '1080019283712',
-    accountName: 'SALTDISTRIBUTE OFFICIAL',
+    accountName: 'WARUNG DEWASA MEDAN',
     badgeBg: 'bg-[#003D79]/20 text-[#93C5FD] border-[#003D79]/40',
     logo: (
       <div className="w-8 h-8 rounded-lg bg-[#003D79] text-white flex items-center justify-center font-black text-xs shadow-sm">
@@ -162,7 +162,7 @@ const PAYMENT_OPTIONS: PaymentOption[] = [
     name: 'QRIS Universal',
     provider: 'Scan Semua M-Banking & E-Wallet',
     accountNumber: 'NMID: ID102438920192',
-    accountName: 'SALTDISTRIBUTE STORE',
+    accountName: 'WARUNG DEWASA MEDAN',
     badgeBg: 'bg-rose-500/15 text-rose-400 border-rose-500/30',
     logo: (
       <div className="w-8 h-8 rounded-lg bg-rose-600 text-white flex items-center justify-center font-black text-xs shadow-sm">
@@ -482,50 +482,54 @@ Mohon konfirmasi ketersediaan stok dan jadwal pengiriman segera. Terima kasih!`;
   };
 
   return (
-    <div 
+    <div
       className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4"
       role="dialog"
       aria-modal="true"
       aria-labelledby="modal-direct-order-title"
     >
-      {/* Semi-transparent dark blur backdrop */}
+      {/* Tonal dim backdrop — replaces raw bg-black/85 + backdrop-blur-md */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 bg-black/85 backdrop-blur-md"
+        className="fixed inset-0 bg-md-surface/60 backdrop-blur-[2px]"
         onClick={onClose}
         aria-hidden="true"
       />
 
-      {/* Main Form Modal Card */}
+      {/* M3 Bottom Sheet — rounded-t-m3-xl on mobile, rounded-m3-xl on sm+ */}
       <motion.div
-        initial={{ opacity: 0, scale: 0.95, y: 30 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        exit={{ opacity: 0, scale: 0.95, y: 20 }}
-        transition={{ type: 'spring', stiffness: 300, damping: 26 }}
-        className="relative w-full sm:max-w-2xl bg-[#111827] border-t sm:border border-slate-700/80 rounded-t-3xl sm:rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[94vh] sm:max-h-[90vh] z-10"
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: 30 }}
+        transition={{ type: 'spring', stiffness: 300, damping: 28 }}
+        className="relative w-full sm:max-w-2xl bg-md-surface border-t sm:border border-md-outline-variant rounded-t-m3-xl sm:rounded-m3-xl shadow-2xl overflow-hidden flex flex-col max-h-[94vh] sm:max-h-[90vh] z-10"
       >
-        {/* Top Header */}
-        <div className="px-5 py-4 border-b border-slate-800 bg-[#111827] flex items-center justify-between">
+        {/* M3 Drag Handle — visible on mobile bottom sheet */}
+        <div className="mx-auto mt-3 mb-1 h-1.5 w-12 rounded-full bg-md-outline/30 sm:hidden" />
+
+        {/* Top Header — surfaceContainer panel */}
+        <div className="px-5 py-4 border-b border-md-outline-variant bg-md-surface-container flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <div className="p-2 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400">
+            <div className="p-2 rounded-m3-md bg-md-primary/10 border border-md-primary/30 text-md-primary">
               <Truck className="w-5 h-5" />
             </div>
             <div>
-              <h3 id="modal-direct-order-title" className="font-display text-sm sm:text-base font-bold text-white">
+              <h3 id="modal-direct-order-title" className="font-display text-sm sm:text-base font-bold text-md-on-surface">
                 Pesan Langsung ke Seller (Bisa COD & E-Wallet)
               </h3>
-              <p className="text-[11px] text-slate-400">
+              <p className="text-[11px] text-md-on-surface-variant">
                 Pengiriman Cepat, Privasi Terjamin & Konfirmasi Otomatis via WhatsApp
               </p>
             </div>
           </div>
 
+          {/* Close button — 48px touch target */}
           <button
             onClick={onClose}
             aria-label="Tutup Form"
-            className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer"
+            className="flex min-h-[48px] min-w-[48px] items-center justify-center rounded-m3-full text-md-on-surface-variant hover:bg-md-surface-container-high transition-colors ease-m3-expressive-fast duration-m3-fast cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -536,18 +540,20 @@ Mohon konfirmasi ketersediaan stok dan jadwal pengiriman segera. Terima kasih!`;
           {orderSuccessData ? (
             /* Order Success Screen */
             <div className="py-8 px-4 text-center space-y-5 animate-fade-in">
-              <div className="w-16 h-16 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center justify-center mx-auto shadow-lg shadow-emerald-950/40">
+              {/* md-primary-container success state — replaces raw emerald-500/10 */}
+              <div className="w-16 h-16 rounded-m3-full bg-md-primary-container border border-md-primary/30 text-md-primary flex items-center justify-center mx-auto">
                 <CheckCircle2 className="w-8 h-8" />
               </div>
 
               <div className="space-y-1.5 max-w-md mx-auto">
-                <span className="px-3 py-1 rounded-full bg-emerald-500/15 text-emerald-400 font-mono text-xs font-bold border border-emerald-500/30">
+                {/* tabular-nums on order number to prevent mono-width jump */}
+                <span className="tabular-nums px-3 py-1 rounded-m3-full bg-md-primary/15 text-md-primary font-mono text-xs font-bold border border-md-primary/30">
                   {orderSuccessData.orderNumber}
                 </span>
-                <h3 className="font-display text-xl font-bold text-white mt-2">
+                <h3 className="font-display text-xl font-bold text-md-on-surface mt-2">
                   Pesanan Berhasil Dicatat!
                 </h3>
-                <p className="text-xs text-slate-300 leading-relaxed">
+                <p className="text-xs text-md-on-surface-variant leading-relaxed">
                   Data pesanan dan pembayaran Anda telah tersimpan di sistem. Klik tombol di bawah untuk langsung membuka WhatsApp dan konfirmasi jadwal pengiriman dengan admin seller.
                 </p>
               </div>
@@ -557,14 +563,14 @@ Mohon konfirmasi ketersediaan stok dan jadwal pengiriman segera. Terima kasih!`;
                   href={orderSuccessData.waUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex-1 inline-flex items-center justify-center gap-2 py-3 px-5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-lg shadow-emerald-950/50 transition-all cursor-pointer active:scale-95"
+                  className="flex-1 inline-flex items-center justify-center min-h-[48px] gap-2 py-3 px-5 rounded-m3-full bg-md-primary text-md-on-primary font-bold text-xs shadow-lg transition-all ease-m3-expressive-fast duration-m3-fast cursor-pointer active:scale-95"
                 >
                   <MessageCircle className="w-4 h-4" />
                   <span>Buka WhatsApp Sekarang</span>
                 </a>
                 <button
                   onClick={onClose}
-                  className="px-5 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white font-bold text-xs border border-slate-700 transition-colors cursor-pointer"
+                  className="min-h-[48px] px-5 py-3 rounded-m3-full bg-md-surface-container-high hover:bg-md-surface-container-highest text-md-on-surface-variant hover:text-md-on-surface font-bold text-xs border border-md-outline-variant transition-colors ease-m3-expressive-fast duration-m3-fast cursor-pointer"
                 >
                   Selesai
                 </button>
@@ -573,54 +579,55 @@ Mohon konfirmasi ketersediaan stok dan jadwal pengiriman segera. Terima kasih!`;
           ) : (
             /* Order Entry Form */
             <form onSubmit={handleSubmitOrder} className="space-y-6">
-              {/* Section 1: Item Detail & Quantity Calculator */}
-              <div className="p-4 rounded-2xl bg-[#161F30] border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              {/* Section 1: Collapsible Order Summary (Product + Qty + Subtotal) */}
+              <div className="p-4 rounded-m3-lg bg-md-surface-container border border-md-outline-variant flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div className="flex items-center gap-3.5">
                   <img
                     src={product.image_url}
                     alt={product.title}
-                    className="w-16 h-16 object-cover rounded-xl bg-slate-900 border border-slate-700 shrink-0"
+                    className="w-16 h-16 object-cover rounded-m3-md bg-md-surface-container-highest border border-md-outline-variant shrink-0"
                   />
                   <div className="space-y-0.5">
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-400">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-md-primary">
                       {product.category}
                     </span>
-                    <h4 className="font-display text-sm font-bold text-white line-clamp-1">
+                    <h4 className="font-display text-sm font-bold text-md-on-surface line-clamp-1">
                       {product.title}
                     </h4>
-                    <div className="text-xs font-semibold text-slate-300">
-                      {formatRupiah(unitPrice)} <span className="text-slate-500 font-normal">/ item</span>
+                    <div className="tabular-nums text-xs font-semibold text-md-on-surface-variant">
+                      {formatRupiah(unitPrice)} <span className="text-md-on-surface-variant/60 font-normal">/ item</span>
                     </div>
                   </div>
                 </div>
 
                 {/* Quantity Selector & Subtotal */}
-                <div className="flex items-center justify-between sm:justify-end gap-4 pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-800">
-                  <div className="flex items-center gap-1.5 bg-slate-900/90 border border-slate-700 rounded-xl p-1">
+                <div className="flex items-center justify-between sm:justify-end gap-4 pt-2 sm:pt-0 border-t sm:border-t-0 border-md-outline-variant">
+                  {/* Stepper — surfaceContainerHighest bg, 48px touch row */}
+                  <div className="flex items-center gap-1.5 bg-md-surface-container-highest border border-md-outline-variant rounded-m3-md p-1">
                     <button
                       type="button"
                       onClick={() => setQuantity(Math.max(1, quantity - 1))}
                       disabled={quantity <= 1}
-                      className="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 disabled:opacity-30 transition-colors cursor-pointer"
+                      className="min-h-[36px] min-w-[36px] flex items-center justify-center rounded-m3-sm text-md-on-surface-variant hover:text-md-on-surface hover:bg-md-surface-container disabled:opacity-30 transition-colors ease-m3-expressive-fast duration-m3-fast cursor-pointer"
                     >
                       <Minus className="w-3.5 h-3.5" />
                     </button>
-                    <span className="font-display text-sm font-bold text-white px-2 min-w-[24px] text-center">
+                    <span className="tabular-nums font-display text-sm font-bold text-md-on-surface px-2 min-w-[24px] text-center">
                       {quantity}
                     </span>
                     <button
                       type="button"
                       onClick={() => setQuantity(Math.min(20, quantity + 1))}
                       disabled={quantity >= 20}
-                      className="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 disabled:opacity-30 transition-colors cursor-pointer"
+                      className="min-h-[36px] min-w-[36px] flex items-center justify-center rounded-m3-sm text-md-on-surface-variant hover:text-md-on-surface hover:bg-md-surface-container disabled:opacity-30 transition-colors ease-m3-expressive-fast duration-m3-fast cursor-pointer"
                     >
                       <Plus className="w-3.5 h-3.5" />
                     </button>
                   </div>
 
                   <div className="text-right">
-                    <span className="text-[10px] text-slate-400 block">Total Pembelian</span>
-                    <span className="font-display text-base font-extrabold text-white">
+                    <span className="text-[10px] text-md-on-surface-variant block">Total Pembelian</span>
+                    <span className="tabular-nums font-display text-base font-extrabold text-md-on-surface">
                       {formatRupiah(totalPrice)}
                     </span>
                   </div>
@@ -629,29 +636,30 @@ Mohon konfirmasi ketersediaan stok dan jadwal pengiriman segera. Terima kasih!`;
 
               {/* Section 2: Buyer Personal Details */}
               <div className="space-y-3.5">
-                <div className="flex items-center gap-2 text-xs font-bold text-white uppercase tracking-wider">
-                  <User className="w-4 h-4 text-emerald-400" />
+                <div className="flex items-center gap-2 text-xs font-bold text-md-on-surface uppercase tracking-wider">
+                  <User className="w-4 h-4 text-md-primary" />
                   <span>Data Kontak Pembeli</span>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                   <div className="space-y-1">
-                    <label className="text-xs font-medium text-slate-300">
-                      Nama Lengkap <span className="text-rose-400">*</span>
+                    <label className="text-xs font-medium text-md-on-surface-variant">
+                      Nama Lengkap <span className="text-md-error">*</span>
                     </label>
+                    {/* min-h-[48px]: M3 minimum touch target for all inputs */}
                     <input
                       type="text"
                       required
                       value={customerName}
                       onChange={(e) => setCustomerName(e.target.value)}
                       placeholder="Contoh: Budi Santoso"
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-[#0B0F19] border border-slate-700 text-xs text-white placeholder-slate-500 outline-none focus:border-emerald-500 transition-all"
+                      className="min-h-[48px] w-full px-3.5 py-2.5 rounded-m3-md bg-md-surface-container border border-md-outline text-xs text-md-on-surface placeholder:text-md-on-surface-variant/50 outline-none focus:border-md-primary transition-colors ease-m3-expressive-fast duration-m3-fast"
                     />
                   </div>
 
                   <div className="space-y-1">
-                    <label className="text-xs font-medium text-slate-300">
-                      Nomor Telepon / HP <span className="text-rose-400">*</span>
+                    <label className="text-xs font-medium text-md-on-surface-variant">
+                      Nomor Telepon / HP <span className="text-md-error">*</span>
                     </label>
                     <input
                       type="tel"
@@ -659,7 +667,7 @@ Mohon konfirmasi ketersediaan stok dan jadwal pengiriman segera. Terima kasih!`;
                       value={customerPhone}
                       onChange={(e) => setCustomerPhone(e.target.value)}
                       placeholder="Contoh: 081234567890"
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-[#0B0F19] border border-slate-700 text-xs text-white placeholder-slate-500 outline-none focus:border-emerald-500 transition-all"
+                      className="min-h-[48px] w-full px-3.5 py-2.5 rounded-m3-md bg-md-surface-container border border-md-outline text-xs text-md-on-surface placeholder:text-md-on-surface-variant/50 outline-none focus:border-md-primary transition-colors ease-m3-expressive-fast duration-m3-fast"
                     />
                   </div>
                 </div>

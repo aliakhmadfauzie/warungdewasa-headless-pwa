@@ -31,33 +31,37 @@ interface DirectOrderManagerProps {
 const STATUS_BADGES: Record<DirectOrderStatus, { label: string; bg: string; text: string; icon: React.ReactNode }> = {
   pending: {
     label: 'Menunggu Konfirmasi',
-    bg: 'bg-amber-500/10 border-amber-500/30',
-    text: 'text-amber-400',
-    icon: <Clock className="w-3.5 h-3.5 text-amber-400" />
+    // md-amber-badge: custom extension token (not remapped by dynamic color)
+    bg: 'bg-md-amber-badge/10 border-md-amber-badge/30',
+    text: 'text-md-amber-badge',
+    icon: <Clock className="w-3.5 h-3.5 text-md-amber-badge" />
   },
   confirmed: {
     label: 'Dikonfirmasi',
-    bg: 'bg-sky-500/10 border-sky-500/30',
-    text: 'text-sky-400',
-    icon: <CheckCircle2 className="w-3.5 h-3.5 text-sky-400" />
+    // md-tertiary: teal-blue info role
+    bg: 'bg-md-tertiary/10 border-md-tertiary/30',
+    text: 'text-md-tertiary',
+    icon: <CheckCircle2 className="w-3.5 h-3.5 text-md-tertiary" />
   },
   shipping: {
     label: 'Sedang Dikirim',
-    bg: 'bg-indigo-500/10 border-indigo-500/30',
-    text: 'text-indigo-400',
-    icon: <Truck className="w-3.5 h-3.5 text-indigo-400" />
+    bg: 'bg-md-secondary/10 border-md-secondary/30',
+    text: 'text-md-secondary',
+    icon: <Truck className="w-3.5 h-3.5 text-md-secondary" />
   },
   completed: {
     label: 'Selesai / Terkirim',
-    bg: 'bg-emerald-500/10 border-emerald-500/30',
-    text: 'text-emerald-400',
-    icon: <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+    // md-primary: emerald brand (success completion)
+    bg: 'bg-md-primary/10 border-md-primary/30',
+    text: 'text-md-primary',
+    icon: <CheckCircle2 className="w-3.5 h-3.5 text-md-primary" />
   },
   cancelled: {
     label: 'Dibatalkan',
-    bg: 'bg-rose-500/10 border-rose-500/30',
-    text: 'text-rose-400',
-    icon: <XCircle className="w-3.5 h-3.5 text-rose-400" />
+    // md-error: error role
+    bg: 'bg-md-error/10 border-md-error/30',
+    text: 'text-md-error',
+    icon: <XCircle className="w-3.5 h-3.5 text-md-error" />
   }
 };
 
@@ -112,14 +116,14 @@ export const DirectOrderManager: React.FC<DirectOrderManagerProps> = ({ onRefres
 
   return (
     <div className="space-y-6 animate-fade-in">
-      {/* Header & Controls */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-5 rounded-2xl bg-[#111827] border border-slate-800 shadow-md">
+      {/* Header & Controls — surfaceContainer replaces raw #111827 */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-5 rounded-m3-lg bg-md-surface-container border border-md-outline-variant shadow-md">
         <div>
-          <h3 className="font-display text-base sm:text-lg font-bold text-white flex items-center gap-2">
-            <Truck className="w-5 h-5 text-emerald-400" />
+          <h3 className="font-display text-base sm:text-lg font-bold text-md-on-surface flex items-center gap-2">
+            <Truck className="w-5 h-5 text-md-primary" />
             <span>Manajemen Pesanan Langsung & COD Medan</span>
           </h3>
-          <p className="text-xs text-slate-400 mt-0.5">
+          <p className="text-xs text-md-on-surface-variant mt-0.5">
             Kelola pesanan kurir COD, pembayaran E-Wallet/Transfer, dan bukti resi transfer
           </p>
         </div>
@@ -127,7 +131,7 @@ export const DirectOrderManager: React.FC<DirectOrderManagerProps> = ({ onRefres
         <div className="flex items-center gap-2.5">
           <button
             onClick={loadOrders}
-            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-bold border border-slate-700 transition-colors cursor-pointer active:scale-95"
+            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-m3-md bg-md-surface-container-high hover:bg-md-surface-container-highest text-md-on-surface-variant hover:text-md-on-surface text-xs font-bold border border-md-outline-variant transition-colors ease-m3-expressive-fast duration-m3-fast cursor-pointer active:scale-95"
           >
             <RefreshCw className="w-3.5 h-3.5" />
             <span>Refresh</span>
@@ -135,30 +139,31 @@ export const DirectOrderManager: React.FC<DirectOrderManagerProps> = ({ onRefres
         </div>
       </div>
 
-      {/* Filter & Search Toolbar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-2xl bg-[#111827] border border-slate-800 shadow-sm">
-        {/* Search Box */}
+      {/* Filter & Search Toolbar — surfaceContainer bg, outline-variant border */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-m3-lg bg-md-surface-container border border-md-outline-variant shadow-sm">
+        {/* Search Box — surface-container-lowest inner well */}
         <div className="relative flex-1">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-md-on-surface-variant" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Cari nomor pesanan, nama pembeli, no HP, atau alamat..."
-            className="w-full pl-10 pr-4 py-2 rounded-xl bg-[#0B0F19] border border-slate-700 text-xs text-white placeholder-slate-500 outline-none focus:border-emerald-500 transition-all"
+            className="w-full pl-10 pr-4 py-2 rounded-m3-md bg-md-surface text-xs text-md-on-surface placeholder-md-on-surface-variant border border-md-outline-variant outline-none focus:border-md-primary transition-colors ease-m3-expressive-fast duration-m3-fast"
           />
         </div>
 
-        {/* Status Filter Tabs */}
+        {/* M3 Segmented Status Filter Chips */}
         <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0 scrollbar-none">
           {(['all', 'pending', 'confirmed', 'shipping', 'completed', 'cancelled'] as const).map((st) => (
             <button
               key={st}
               onClick={() => setStatusFilter(st)}
-              className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-colors whitespace-nowrap capitalize cursor-pointer ${
+              // min-h-[44px] ensures accessible touch target on mobile
+              className={`min-h-[44px] px-3 py-1.5 rounded-m3-sm text-xs font-bold transition-colors ease-m3-expressive-fast duration-m3-fast whitespace-nowrap capitalize cursor-pointer ${
                 statusFilter === st
-                  ? 'bg-emerald-600 text-white shadow-xs'
-                  : 'bg-slate-800/80 text-slate-400 hover:text-white border border-slate-700/60'
+                  ? 'bg-md-primary text-md-on-primary shadow-xs'
+                  : 'bg-md-surface-container-high text-md-on-surface-variant hover:text-md-on-surface border border-md-outline-variant'
               }`}
             >
               {st === 'all' ? 'Semua Status' : st}
@@ -169,10 +174,10 @@ export const DirectOrderManager: React.FC<DirectOrderManagerProps> = ({ onRefres
 
       {/* Orders List Grid */}
       {filteredOrders.length === 0 ? (
-        <div className="p-12 text-center rounded-2xl bg-[#111827] border border-slate-800 space-y-3">
-          <Package className="w-10 h-10 text-slate-600 mx-auto" />
-          <h4 className="text-sm font-bold text-white">Tidak Ada Pesanan Ditemukan</h4>
-          <p className="text-xs text-slate-400 max-w-sm mx-auto">
+        <div className="p-12 text-center rounded-m3-lg bg-md-surface-container border border-md-outline-variant space-y-3">
+          <Package className="w-10 h-10 text-md-on-surface-variant mx-auto" />
+          <h4 className="text-sm font-bold text-md-on-surface">Tidak Ada Pesanan Ditemukan</h4>
+          <p className="text-xs text-md-on-surface-variant max-w-sm mx-auto">
             Belum ada pesanan langsung yang sesuai dengan filter pencarian ini.
           </p>
         </div>
@@ -190,12 +195,15 @@ export const DirectOrderManager: React.FC<DirectOrderManagerProps> = ({ onRefres
             return (
               <div
                 key={order.id}
-                className="p-5 rounded-2xl bg-[#161F30] border border-slate-800 hover:border-slate-700 transition-all shadow-md space-y-4"
+                // surfaceVariant (#161F30 dark) replaces raw bg-[#161F30]
+                // outline-variant border replaces border-slate-800
+                className="p-5 rounded-m3-lg bg-md-surface-variant border border-md-outline-variant hover:border-md-outline transition-colors ease-m3-expressive-fast duration-m3-fast shadow-md space-y-4"
               >
                 {/* Order Card Header */}
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 pb-3 border-b border-slate-800">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 pb-3 border-b border-md-outline-variant">
                   <div className="flex items-center gap-3">
-                    <span className="font-mono text-xs font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/25 px-2.5 py-1 rounded-lg">
+                    {/* Order number — tabular-nums prevents width shift on update */}
+                    <span className="tabular-nums font-mono text-xs font-bold text-md-primary bg-md-primary/10 border border-md-primary/25 px-2.5 py-1 rounded-m3-sm">
                       {order.order_number}
                     </span>
                     <span className="text-xs text-slate-400 flex items-center gap-1.5">
@@ -336,36 +344,40 @@ export const DirectOrderManager: React.FC<DirectOrderManagerProps> = ({ onRefres
                     {order.status === 'pending' && (
                       <button
                         onClick={() => handleUpdateStatus(order.id, 'confirmed')}
-                        className="w-full sm:w-auto min-h-[42px] px-4 py-2 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs shadow-md active:scale-95 transition-all cursor-pointer"
+                        className="w-full sm:w-auto min-h-[44px] px-4 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs shadow-md active:scale-95 transition-all cursor-pointer flex items-center justify-center gap-1.5"
                       >
-                        Konfirmasi Pesanan
+                        <CheckCircle2 className="w-3.5 h-3.5" />
+                        <span>Konfirmasi Pesanan</span>
                       </button>
                     )}
 
                     {(order.status === 'pending' || order.status === 'confirmed') && (
                       <button
                         onClick={() => handleUpdateStatus(order.id, 'shipping')}
-                        className="w-full sm:w-auto min-h-[42px] px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs shadow-md active:scale-95 transition-all cursor-pointer"
+                        className="w-full sm:w-auto min-h-[44px] px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs shadow-md active:scale-95 transition-all cursor-pointer flex items-center justify-center gap-1.5"
                       >
-                        Kirim Kurir / COD
+                        <Truck className="w-3.5 h-3.5" />
+                        <span>Kirim Kurir / COD</span>
                       </button>
                     )}
 
                     {order.status === 'shipping' && (
                       <button
                         onClick={() => handleUpdateStatus(order.id, 'completed')}
-                        className="w-full sm:w-auto min-h-[42px] px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-md active:scale-95 transition-all cursor-pointer"
+                        className="w-full sm:w-auto min-h-[44px] px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-md active:scale-95 transition-all cursor-pointer flex items-center justify-center gap-1.5"
                       >
-                        Tandai Selesai / Terkirim
+                        <CheckCircle2 className="w-3.5 h-3.5" />
+                        <span>Tandai Selesai / Terkirim</span>
                       </button>
                     )}
 
                     {order.status !== 'cancelled' && order.status !== 'completed' && (
                       <button
                         onClick={() => handleUpdateStatus(order.id, 'cancelled')}
-                        className="w-full sm:w-auto min-h-[42px] px-4 py-2 rounded-xl bg-slate-800 hover:bg-rose-950/60 text-rose-400 hover:text-rose-200 font-bold text-xs border border-slate-700 transition-all active:scale-95 cursor-pointer"
+                        className="w-full sm:w-auto min-h-[44px] px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-rose-950/60 text-rose-400 hover:text-rose-200 font-bold text-xs border border-slate-700 transition-all active:scale-95 cursor-pointer flex items-center justify-center gap-1.5"
                       >
-                        Batalkan
+                        <XCircle className="w-3.5 h-3.5" />
+                        <span>Batalkan</span>
                       </button>
                     )}
                   </div>

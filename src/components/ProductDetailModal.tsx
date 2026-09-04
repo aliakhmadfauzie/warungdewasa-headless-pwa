@@ -306,7 +306,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                 <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
                   Harga Resmi Distributor
                 </span>
-                <div className="text-2xl sm:text-3xl font-extrabold font-display text-white tracking-tight">
+                <div className="text-2xl sm:text-3xl font-black font-display text-emerald-400 tracking-tight tabular-nums">
                   {formatRupiah(product.price)}
                 </div>
               </div>
@@ -334,7 +334,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
             <div className="p-4 rounded-2xl bg-[#0B0F19] border border-slate-800 text-xs sm:text-sm text-slate-300 leading-relaxed space-y-2">
               <p>{product.description}</p>
               <p className="text-slate-400 text-xs">
-                Formula resmi terverifikasi dengan standar higienis tinggi. Dikemas dalam wadah bersegel rapat untuk menjaga kesegaran dan performa maksimal selama masa penyimpanan.
+                Formula resmi terverifikasi dengan standar higienis tinggi. Dikemas dalam kardus polos bersegel rapat tanpa tulisan dewasa untuk menjaga privasi Anda.
               </p>
             </div>
           </div>
@@ -344,7 +344,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
             <div className="space-y-3 pt-2">
               <h4 className="font-display text-sm font-semibold uppercase tracking-wider text-slate-200 flex items-center gap-1.5">
                 <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-                <span>Tips & Catatan Rekomendasi Merchant ({notes.length})</span>
+                <span>Tips &amp; Catatan Rekomendasi Merchant ({notes.length})</span>
               </h4>
               <div className="space-y-2.5">
                 {notes.map((note) => (
@@ -368,11 +368,11 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
           {/* Direct Seller & Marketplace Checkout Callout */}
           <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-slate-800/90 to-[#0B0F19] border border-slate-700/80 space-y-3.5">
             <div className="text-xs font-bold text-white flex items-center justify-between">
-              <span>Pilihan Transaksi & Checkout:</span>
+              <span>Pilihan Transaksi &amp; Checkout:</span>
               <span className="text-[11px] text-emerald-400 font-semibold">Bisa COD Medan / Online</span>
             </div>
 
-            {/* Direct Order Button (Primary) */}
+            {/* Direct Order Button (Primary: Dominates in size, weight & emerald color) */}
             {onOrderDirect && (
               <button
                 onClick={() => {
@@ -380,32 +380,31 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                   onOrderDirect(product);
                 }}
                 disabled={product.stock_status === 'out_of_stock'}
-                className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white font-bold text-xs sm:text-sm transition-all shadow-lg shadow-emerald-950/50 cursor-pointer disabled:opacity-40"
+                className="w-full min-h-[48px] sm:min-h-[52px] flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-gradient-to-r from-emerald-600 via-emerald-500 to-teal-600 hover:from-emerald-500 hover:to-teal-500 active:scale-95 text-white font-display font-extrabold text-sm transition-all shadow-lg shadow-emerald-950/50 cursor-pointer disabled:opacity-40"
               >
                 <Truck className="w-4 h-4" />
-                <span>Pesan Langsung ke Seller (Bisa COD Area Medan)</span>
+                <span>Pesan Cepat (Bisa COD Area Medan)</span>
               </button>
             )}
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
-              {/* Shopee Button */}
+            {/* Secondary Marketplace Buttons: Subdued quiet rows */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
               <button
                 onClick={() => openRegionalMarketplace({ platform: 'shopee', webUrl: product.shopee_url })}
                 disabled={product.stock_status === 'out_of_stock'}
-                className="flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-[#EE4D2D]/15 text-[#FF5722] border border-[#EE4D2D]/40 hover:bg-[#EE4D2D]/25 font-semibold disabled:opacity-40"
+                className="min-h-[42px] flex items-center justify-center gap-2 px-4 rounded-xl bg-slate-900/70 text-slate-300 border border-white/10 hover:border-[#EE4D2D]/40 hover:text-[#EE4D2D] text-xs font-medium transition-colors disabled:opacity-40"
               >
-                <span>Checkout di Shopee</span>
-                <ExternalLink className="w-3.5 h-3.5" />
+                <span>Beli di Shopee</span>
+                <ExternalLink className="w-3.5 h-3.5 opacity-60" />
               </button>
 
-              {/* Tokopedia Button */}
               <button
                 onClick={() => openRegionalMarketplace({ platform: 'tokopedia', webUrl: product.tokopedia_url })}
                 disabled={product.stock_status === 'out_of_stock'}
-                className="flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-[#03AC0E]/15 text-[#00AA5B] border border-[#00AA5B]/40 hover:bg-[#03AC0E]/25 font-semibold disabled:opacity-40"
+                className="min-h-[42px] flex items-center justify-center gap-2 px-4 rounded-xl bg-slate-900/70 text-slate-300 border border-white/10 hover:border-[#03AC0E]/40 hover:text-[#03AC0E] text-xs font-medium transition-colors disabled:opacity-40"
               >
-                <span>Checkout di Tokopedia</span>
-                <ExternalLink className="w-3.5 h-3.5" />
+                <span>Beli di Tokopedia</span>
+                <ExternalLink className="w-3.5 h-3.5 opacity-60" />
               </button>
             </div>
           </div>

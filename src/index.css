@@ -4,10 +4,11 @@
 
 @layer base {
   :root {
-    --bg-main: #0B0F19;
-    --bg-card: #111827;
-    --border-subtle: rgba(255, 255, 255, 0.08);
-    --accent-primary: #10B981;
+    --bg-main: #0A1A14;
+    --bg-card: #0F261D;
+    --border-subtle: rgba(45, 212, 191, 0.12);
+    --accent-primary: #006C4C;
+    --accent-mint: #2DD4BF;
     --text-primary: #F9FAFB;
     --text-secondary: #E2E8F0;
     --text-muted: #94A3B8;
@@ -15,10 +16,11 @@
 
   html.dark,
   body.dark {
-    --bg-main: #0B0F19;
-    --bg-card: #111827;
-    --border-subtle: rgba(255, 255, 255, 0.08);
-    --accent-primary: #10B981;
+    --bg-main: #0A1A14;
+    --bg-card: #0F261D;
+    --border-subtle: rgba(45, 212, 191, 0.12);
+    --accent-primary: #006C4C;
+    --accent-mint: #2DD4BF;
     --text-primary: #F9FAFB;
     --text-secondary: #E2E8F0;
     --text-muted: #94A3B8;
@@ -30,7 +32,8 @@
     --bg-main: #F4F6F9;
     --bg-card: #FFFFFF;
     --border-subtle: #E2E8F0;
-    --accent-primary: #059669;
+    --accent-primary: #006C4C;
+    --accent-mint: #059669;
     --text-primary: #0F172A;
     --text-secondary: #334155;
     --text-muted: #64748B;
@@ -55,8 +58,8 @@
   }
 
   .card-gradient-surface {
-    background: linear-gradient(180deg, #151D2F 0%, #0E1524 100%);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: linear-gradient(180deg, #143327 0%, #0F261D 100%);
+    border: 1px solid rgba(45, 212, 191, 0.12);
     box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
   }
 
@@ -377,5 +380,42 @@ footer {
 /* ─── GPU Layer Hints ────────────────────────────────────────────────────────*/
 .will-change-transform {
   will-change: transform;
+}
+
+/* ─── Human UI Guide: Signature Brand & Kicker System (Prompt 07) ─────────── */
+.kicker-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.25rem 0.625rem;
+  border-radius: 9999px;
+  font-size: 0.6875rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: rgba(16, 185, 129, 0.1);
+  color: #34D399;
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  backdrop-filter: blur(8px);
+}
+
+.signature-card {
+  position: relative;
+  background: linear-gradient(180deg, #111827 0%, #0D131F 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1.25rem;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.signature-card:hover {
+  border-color: rgba(16, 185, 129, 0.4);
+  box-shadow: 0 12px 30px -8px rgba(0, 0, 0, 0.6), 0 0 20px -2px rgba(16, 185, 129, 0.15);
+}
+
+.signature-divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.08) 30%, rgba(255, 255, 255, 0.08) 70%, transparent 100%);
+  margin: 2.5rem 0;
 }
 

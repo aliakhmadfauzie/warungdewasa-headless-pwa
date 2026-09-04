@@ -13,6 +13,10 @@ import { DirectOrderModal } from './components/DirectOrderModal';
 import { PaymentMethodsShortcutModal } from './components/PaymentMethodsShortcutModal';
 import { HeroMotion } from './components/HeroMotion';
 import { OrchestratedWebGLBackground } from './components/OrchestratedWebGLBackground';
+import { AudienceQualifierStrip } from './components/AudienceQualifierStrip';
+import { WhyWarungDewasaSection } from './components/WhyWarungDewasaSection';
+import { FeaturedWinnerSection } from './components/FeaturedWinnerSection';
+import { ClosingReassuranceSection } from './components/ClosingReassuranceSection';
 import { Search, Layers, SlidersHorizontal, Flame, TrendingUp, Sparkles, ArrowUpDown } from 'lucide-react';
 
 // PERFORMANCE: AdminDashboard is code-split into its own lazy chunk.
@@ -187,6 +191,15 @@ export function App() {
     (selectedStockStatus !== 'all' ? 1 : 0) + 
     (sortBy !== 'default' ? 1 : 0);
 
+  // Human UI Guide - Prompt 04: Pick the Winner
+  // Find the top-selling / most highlighted product for the dedicated showcase
+  const winnerProduct = useMemo(() => {
+    if (products.length === 0) return null;
+    return products.find(p => p.stock_status === 'in_stock' && p.merchant_notes && p.merchant_notes.length > 0) ||
+      products.find(p => p.stock_status === 'in_stock') ||
+      products[0] || null;
+  }, [products]);
+
   const resetAllFilters = () => {
     setSearchQuery('');
     setSelectedCategory('Semua');
@@ -217,8 +230,8 @@ export function App() {
       {/* Main Content Area (Offset for Edge-to-Edge Floating Header with FAB clearance) */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-20 sm:pt-24 pb-32 sm:pb-36">
         {currentView === 'store' ? (
-          <div className="space-y-12 animate-fade-in">
-            {/* GSAP Split Typography, Floating Particle Parallax & Magnetic CTA Hero */}
+          <div className="space-y-10 sm:space-y-14 animate-fade-in">
+            {/* 1. Asymmetric Hero & Sharpened Message (Prompt 01 & 02) */}
             <HeroMotion
               totalCatalogCount={products.length}
               onExploreClick={() => {
@@ -229,7 +242,43 @@ export function App() {
               onOpenFilterClick={() => setIsFilterOverlayOpen(true)}
             />
 
-            {/* Filter & Search Bar - High Contrast Clean Surfaces */}
+            {/* 2. Qualifying Audience Strip (Prompt 03: Build the Argument - Beat 1) */}
+            <AudienceQualifierStrip
+              onDirectCodClick={() => {
+                if (winnerProduct) {
+                  setSelectedProductForDirectOrder(winnerProduct);
+                } else {
+                  const el = document.getElementById('catalog-grid');
+                  el?.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
+            />
+
+            <div className="signature-divider" />
+
+            {/* 3. Why It's Different / Direct Comparison (Prompt 03: Build the Argument - Beat 3) */}
+            <WhyWarungDewasaSection
+              onLearnMoreCod={() => {
+                const el = document.getElementById('catalog-grid');
+                el?.scrollIntoView({ behavior: 'smooth' });
+              }}
+            />
+
+            <div className="signature-divider" />
+
+            {/* 4. Pick the Winner: Spotlight Dedicated Section (Prompt 04) */}
+            {winnerProduct && (
+              <>
+                <FeaturedWinnerSection
+                  product={winnerProduct}
+                  onOrderDirect={(p) => setSelectedProductForDirectOrder(p)}
+                  onViewDetail={(p) => setSelectedProductForDetail(p)}
+                />
+                <div className="signature-divider" />
+              </>
+            )}
+
+            {/* 5. Complete Catalog Grid & Interactive Filters */}
             <div id="catalog-grid" className="scroll-mt-24 flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 p-3.5 sm:p-5 rounded-2xl dark:bg-[#111827] bg-white dark:border-slate-800 border-slate-200 shadow-sm">
               {/* Search Bar with Quick Clear */}
               <div className="relative flex-1">
@@ -455,6 +504,7 @@ export function App() {
                     <ProductCard
                       key={product.id}
                       product={product}
+                      isWinner={product.id === winnerProduct?.id}
                       onOpenNotes={(p) => setSelectedProductForNotes(p)}
                       onViewDetail={(p) => setSelectedProductForDetail(p)}
                       onOrderDirect={(p) => setSelectedProductForDirectOrder(p)}
@@ -479,6 +529,20 @@ export function App() {
                 )}
               </div>
             )}
+
+            {/* 6. Closing Reassurance & Final Ask (Prompt 03: Build the Argument - Beat 6) */}
+            <div className="signature-divider" />
+            <ClosingReassuranceSection
+              onOrderNowClick={() => {
+                if (winnerProduct) {
+                  setSelectedProductForDirectOrder(winnerProduct);
+                } else {
+                  const el = document.getElementById('catalog-grid');
+                  el?.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
+              onRequestSpecialClick={() => setIsSpecialRequestOpen(true)}
+            />
           </div>
         ) : isAuthenticated ? (
           <div className="animate-fade-in">
@@ -535,22 +599,38 @@ export function App() {
         </div>
       )}
 
-      {/* Footer with Official Branding */}
-      <footer className="mt-auto border-t dark:border-slate-800 border-slate-200 dark:bg-[#0B0F19] bg-white py-6 text-center text-xs dark:text-slate-400 text-slate-500">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block" />
-            <span className="font-medium">© {new Date().getFullYear()} Warung Dewasa Abang Dugem. Official Store & Layanan COD Medan.</span>
+      {/* Footer with Human UI Signature & Privacy Reassurance */}
+      <footer className="mt-auto border-t dark:border-slate-800/80 border-slate-200 dark:bg-[#0B0F19] bg-white py-8 text-center text-xs dark:text-slate-400 text-slate-500">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 border-b dark:border-white/5 border-slate-200 pb-4">
+            <div className="flex items-center gap-2.5">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="font-display font-bold dark:text-slate-200 text-slate-800 text-sm">
+                Warung Dewasa Abang Dugem
+              </span>
+              <span className="px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
+                Official COD Medan
+              </span>
+            </div>
+            <p className="text-[11px] text-slate-400">
+              Kemasan 100% kardus polos cokelat tanpa label dewasa. Privasi mutlak terjamin.
+            </p>
           </div>
-          <div className="flex items-center gap-4 dark:text-slate-400 text-slate-500 font-medium">
-            <span>Direct Deep Links: Shopee & Tokopedia</span>
-            <span>•</span>
-            <button 
-              onClick={() => setCurrentView('admin')} 
-              className="text-emerald-600 dark:text-emerald-400 hover:underline font-bold transition-colors cursor-pointer"
-            >
-              Merchant Panel
-            </button>
+
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px]">
+            <span className="font-medium text-slate-400">
+              © {new Date().getFullYear()} Warung Dewasa. Seluruh hak cipta dilindungi.
+            </span>
+            <div className="flex items-center gap-4 text-slate-400 font-medium">
+              <span>Direct Link: Shopee &amp; Tokopedia</span>
+              <span>•</span>
+              <button 
+                onClick={() => setCurrentView('admin')} 
+                className="text-emerald-500 dark:text-emerald-400 hover:underline font-bold transition-colors cursor-pointer"
+              >
+                Merchant Hub
+              </button>
+            </div>
           </div>
         </div>
       </footer>

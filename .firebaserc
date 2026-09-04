@@ -1,6 +1,6 @@
 {
   "projects": {
-    "default": "saltdistribute-2026"
+    "default": "gen-lang-client-0115779017"
   },
   "targets": {
     "saltdistribute-2026": {
@@ -10,5 +10,6 @@
         ]
       }
     }
-  }
+  },
+  "etags": {}
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { App } from './App';
+import './styles/tokens.css'; // M3 design token CSS variables (sys + custom layer)
 import './index.css';
 import { ThemeProvider } from './context/ThemeContext';
 
